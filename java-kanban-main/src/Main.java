@@ -30,6 +30,7 @@ public class Main {
 
         manager.getSubtaskById(5).setStatus(Status.DONE);
         manager.updateEpic(epic1);
+
         System.out.println("-----------------------------------------------\n");
 
         System.out.println(manager.getAllTask());
