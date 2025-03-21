@@ -1,24 +1,20 @@
-package Tasks;
-import Enum.Status;
+package tasks;
+
+import java.util.Objects;
+
 public class Task {
-    private int id;
+    protected static Integer id = 1;
+    private final Integer taskId;
     private String title;
     private String description;
     private Status status;
 
-    public Task(int id, String title, String description, Status status) {
-        this.id = id;
+    public Task(String title, String description) {
+        taskId = id++;
         this.title = title;
         this.description = description;
-        this.status = status;
-    }
+        status = Status.NEW;
 
-    public  int getId() {
-        return id;
-    }
-
-    public  void setId(int id) {
-        this.id = id;
     }
 
     public String getTitle() {
@@ -27,6 +23,10 @@ public class Task {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public Integer getId() {
+        return taskId;
     }
 
     public String getDescription() {
@@ -45,33 +45,29 @@ public class Task {
         this.status = status;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return id == task.id &&
-                title.equals(task.title) &&
-                description.equals(task.description) &&
-                status == task.status;
+        return  taskId.equals(task.taskId);
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + title.hashCode();
-        result = 31 * result + description.hashCode();
-        result = 31 * result + status.hashCode();
-        return result;
+        return Objects.hash(taskId);
     }
 
     @Override
     public String toString() {
-        return "Task{" +
-                "id=" + id +
+        return "{" +
+                "ID='" + taskId +
                 ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
                 ", status=" + status +
                 '}';
     }
+
+
+
 }
