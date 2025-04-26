@@ -3,17 +3,31 @@ package tasks;
 import java.util.Objects;
 
 public class Task {
-    protected static Integer id = 1;
-    protected final Integer taskId;
+    protected Integer Id;
     private String title;
     private String description;
     private Status status;
 
     public Task(String title, String description) {
-        taskId = id++;
+        Id = 0;
         this.title = title;
         this.description = description;
         status = Status.NEW;
+    }
+
+    public Task(String title, String description, Status status, Integer Id){
+        this.Id = Id;
+        this.title = title;
+        this.description = description;
+        this.status = status;
+    }
+
+    public Task(Task task){
+        System.out.println(task);
+        this.Id = task.Id;
+        this.title = task.title;
+        this.description = task.description;
+        this.status = task.status;
     }
 
     public String getTitle() {
@@ -25,7 +39,11 @@ public class Task {
     }
 
     public Integer getId() {
-        return taskId;
+        return Id;
+    }
+
+    public void setId(Integer Id) {
+        this.Id = Id;
     }
 
     public String getDescription() {
@@ -50,18 +68,18 @@ public class Task {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return taskId.equals(task.taskId);
+        return Id.equals(task.Id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(taskId);
+        return Objects.hash(Id);
     }
 
     @Override
     public String toString() {
-        return "{" +
-                "id='" + taskId +
+        return "Task{" +
+                "id='" + Id +
                 ", title='" + title + '\'' +
                 ", status=" + status +
                 '}';
