@@ -58,7 +58,7 @@ public class InMemoryTaskManagerTest {
         manager.getTaskById(taskA.getId()).setStatus(Status.IN_PROGRESS);
         manager.getTaskById(taskA.getId()).setStatus(Status.DONE);
         ArrayList<Task> history = manager.getHistory();
-        assertEquals(Status.IN_PROGRESS, history.get(0).getStatus());
+        assertEquals(Status.IN_PROGRESS, history.get(1).getStatus());
     }
 
     @Test
