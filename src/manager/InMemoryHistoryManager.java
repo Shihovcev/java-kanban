@@ -1,9 +1,7 @@
 package manager;
 
 import tasks.Task;
-
 import java.util.*;
-
 
 public class InMemoryHistoryManager implements HistoryManager {
     ArrayList<Task> historyArray;
@@ -17,7 +15,6 @@ public class InMemoryHistoryManager implements HistoryManager {
         tail = null;
     }
 
-
     @Override
     public ArrayList<Task> getHistory() {
         ArrayList<Task> historyArray = new ArrayList<>();
@@ -30,7 +27,6 @@ public class InMemoryHistoryManager implements HistoryManager {
 
         return historyArray;
     }
-
 
     @Override
     public void add(Task task) {
