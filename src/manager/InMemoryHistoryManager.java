@@ -4,7 +4,6 @@ import tasks.Task;
 import java.util.*;
 
 public class InMemoryHistoryManager implements HistoryManager {
-    ArrayList<Task> historyArray;
     private Map<Integer, Node> historyMap;
     private Node head;
     private Node tail;
