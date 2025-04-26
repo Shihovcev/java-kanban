@@ -33,6 +33,7 @@ public class EpicTest {
     }
 
     @Test
+
     void givenEpicIsSubtaskToItself_thenExceptionIsThrown() {
         assertThrows(IllegalArgumentException.class, () -> epicA.addSubtask(epicA.getId()));
     }
@@ -55,5 +56,5 @@ public class EpicTest {
         epicA.setId(1);
         epicB.setId(1);
         assertEquals(epicA, epicB);
-    }
+    }    
 }
