@@ -15,14 +15,14 @@ public class Task {
         status = Status.NEW;
     }
 
-    public Task(String title, String description, Status status, Integer Id){
+    public Task(String title, String description, Status status, Integer Id) {
         this.Id = Id;
         this.title = title;
         this.description = description;
         this.status = status;
     }
 
-    public Task(Task task){
+    public Task(Task task) {
         System.out.println(task);
         this.Id = task.Id;
         this.title = task.title;
@@ -84,6 +84,4 @@ public class Task {
                 ", status=" + status +
                 '}';
     }
-
-
 }
