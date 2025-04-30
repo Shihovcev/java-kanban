@@ -5,7 +5,6 @@ import tasks.Subtask;
 import tasks.Task;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 public interface TaskManager {
 
