@@ -146,7 +146,7 @@ public class InMemoryTaskManager implements TaskManager{
     @Override
     public void deleteEpicById(Integer id){ // удаление эпика по ID
         ArrayList<Integer> subTaskIdList = epic.get(id).getSubtaskList();
-        for (Integer subTaskId : subTaskIdList) {
+        for (Integer subTaskId : subTaskIdList){
             subtask.remove(subTaskId);
         }
         this.epic.remove(id);
@@ -168,7 +168,7 @@ public class InMemoryTaskManager implements TaskManager{
         int allInProgress = 0;
         int allDone = 0;
 
-        if (epicId == null) {
+        if (epicId == null){
             return;
         }
 
@@ -176,18 +176,18 @@ public class InMemoryTaskManager implements TaskManager{
             return;
         }
 
-        if (epic.get(epicId).getSubtaskList().isEmpty()) {
+        if (epic.get(epicId).getSubtaskList().isEmpty()){
             epic.get(epicId).setStatus(Status.NEW);
         }
 
-        for (Integer subTaskId : epic.get(epicId).getSubtaskList()) {
-            if (subtask.get(subTaskId).getStatus() == Status.IN_PROGRESS) {
+        for (Integer subTaskId : epic.get(epicId).getSubtaskList()){
+            if (subtask.get(subTaskId).getStatus() == Status.IN_PROGRESS){
                 allInProgress++;
-            } else if (subtask.get(subTaskId).getStatus() == Status.DONE) {
+            } else if (subtask.get(subTaskId).getStatus() == Status.DONE){
                 allDone++;
             }
         }
-        if (allDone > 0 && allDone == epic.get(epicId).getSubtaskList().size()) {
+        if (allDone > 0 && allDone == epic.get(epicId).getSubtaskList().size()){
             epic.get(epicId).setStatus(Status.DONE);
         } else if (allInProgress > 0 || allDone > 0) {
             epic.get(epicId).setStatus(Status.IN_PROGRESS);
