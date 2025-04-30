@@ -18,23 +18,23 @@ public class Subtask extends Task {
         return epicId;
     }
 
-    public void setEpicTask(Integer Id) {
-        if (Id.equals(this.getId())) {
+    public void setEpicTask(Integer id) {
+        if (id.equals(this.getId())) {
             throw new IllegalArgumentException("Подзадача не может быть своим же эпиком.");
         }
-        if (Id.equals(this.getEpicTask())) {
+        if (id.equals(this.getEpicTask())) {
             return;
         }
-        this.epicId = Id;
+        this.epicId = id;
     }
 
     @Override
     public String toString() {
         return "SubTask{" +
-                "id='" + Id +
+                "id='" + id +
                 ", title='" + this.getTitle() + '\'' +
                 ", status=" + this.getStatus() +
-                ", EpicId=" + epicId +
+                ", Epicid=" + epicId +
                 '}';
     }
 }

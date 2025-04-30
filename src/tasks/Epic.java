@@ -2,7 +2,7 @@ package tasks;
 
 import java.util.ArrayList;
 
-public class Epic extends Task{
+public class Epic extends Task {
     private final ArrayList<Integer> subtasks;
 
     public Epic(String title, String description) {
@@ -15,26 +15,26 @@ public class Epic extends Task{
         subtasks = epic.getSubtaskList();
     }
 
-    public ArrayList<Integer> getSubtaskList (){
+    public ArrayList<Integer> getSubtaskList() {
         return subtasks;
     }
 
-    public void addSubtask(Integer Id){
-        if (Id == null) {
-            throw new IllegalArgumentException("ID не может быть равно нулю.");
+    public void addSubtask(Integer id) {
+        if (id == null) {
+            throw new IllegalArgumentException("id не может быть равно нулю.");
         }
-        if (Id.equals(this.getId())) {
+        if (id.equals(this.getId())) {
             throw new IllegalArgumentException("Эпик не может быть своей же подзадачей.");
         }
-        if (subtasks.contains(Id)) {
+        if (subtasks.contains(id)) {
             return;
         }
-       
-        subtasks.add(Id);
+
+        subtasks.add(id);
     }
 
-    public void removeSubtask(Integer Id){
-        subtasks.remove(Id);
+    public void removeSubtask(Integer id) {
+        subtasks.remove(id);
     }
 
     @Override

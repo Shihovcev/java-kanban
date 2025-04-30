@@ -3,28 +3,28 @@ package tasks;
 import java.util.Objects;
 
 public class Task {
-    protected Integer Id;
+    protected Integer id;
     private String title;
     private String description;
     private Status status;
 
     public Task(String title, String description) {
-        Id = 0;
+        id = 0;
         this.title = title;
         this.description = description;
         status = Status.NEW;
     }
 
-    public Task(String title, String description, Status status, Integer Id){
-        this.Id = Id;
+    public Task(String title, String description, Status status, Integer id) {
+        this.id = id;
         this.title = title;
         this.description = description;
         this.status = status;
     }
 
-    public Task(Task task){
+    public Task(Task task) {
         System.out.println(task);
-        this.Id = task.Id;
+        this.id = task.id;
         this.title = task.title;
         this.description = task.description;
         this.status = task.status;
@@ -39,11 +39,11 @@ public class Task {
     }
 
     public Integer getId() {
-        return Id;
+        return id;
     }
 
-    public void setId(Integer Id) {
-        this.Id = Id;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getDescription() {
@@ -68,22 +68,20 @@ public class Task {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return Id.equals(task.Id);
+        return id.equals(task.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(Id);
+        return Objects.hash(id);
     }
 
     @Override
     public String toString() {
         return "Task{" +
-                "id='" + Id +
+                "id='" + id +
                 ", title='" + title + '\'' +
                 ", status=" + status +
                 '}';
     }
-
-
 }
