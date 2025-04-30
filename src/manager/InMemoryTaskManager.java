@@ -47,10 +47,10 @@ public class InMemoryTaskManager implements TaskManager{
     // Final
     @Override
     public void deleteAllSubtask(){ // удаление всех подзадач
-        for (Subtask subTask : subtask.values()) {
+        for (Subtask subTask : subtask.values()){
             epic.get(subTask.getEpicTask()).removeSubtask(subTask.getId());
         }
-        for (Epic epicTask : epic.values()) {
+        for (Epic epicTask : epic.values()){
             updateStatus(epicTask.getId());
         }
         subtask.clear();
@@ -107,7 +107,7 @@ public class InMemoryTaskManager implements TaskManager{
 
     // Final
     @Override
-    public void updateTask (Task taskUpdate){ // Обновление задачи
+    public void updateTask(Task taskUpdate){ // Обновление задачи
         tasks.put(taskUpdate.getId(), taskUpdate);
     }
 
@@ -127,13 +127,13 @@ public class InMemoryTaskManager implements TaskManager{
 
     // Final
     @Override
-    public void deleteTaskById (Integer id){ //удаление задачи по ID
+    public void deleteTaskById(Integer id){ //удаление задачи по ID
         tasks.remove(id);
     }
 
     // Final
     @Override
-    public void deleteSubtaskById (Integer id){ //удаление подзадачи по ID
+    public void deleteSubtaskById(Integer id){ //удаление подзадачи по ID
         Integer epicId = subtask.get(id).getEpicTask();
         Epic epicTask = epic.get(epicId);
         epicTask.removeSubtask(id);
@@ -144,7 +144,7 @@ public class InMemoryTaskManager implements TaskManager{
 
     // Final
     @Override
-    public void deleteEpicById (Integer id){ // удаление эпика по ID
+    public void deleteEpicById(Integer id){ // удаление эпика по ID
         ArrayList<Integer> subTaskIdList = epic.get(id).getSubtaskList();
         for (Integer subTaskId : subTaskIdList) {
             subtask.remove(subTaskId);
@@ -154,12 +154,12 @@ public class InMemoryTaskManager implements TaskManager{
 
     // Final
     @Override
-    public ArrayList<Task> getHistory() {
+    public ArrayList<Task> getHistory(){
         return history.getHistory();
     }
 
     // Final
-    private Integer generateNewId() {
+    private Integer generateNewId(){
         return taskId++;
     }
 
@@ -172,7 +172,7 @@ public class InMemoryTaskManager implements TaskManager{
             return;
         }
 
-        if (!epic.containsKey(epicId)) {
+        if (!epic.containsKey(epicId)){
             return;
         }
 
@@ -181,17 +181,17 @@ public class InMemoryTaskManager implements TaskManager{
         }
 
         for (Integer subTaskId : epic.get(epicId).getSubtaskList()) {
-            if (subtask.get(subTaskId).getStatus() == Status.IN_PROGRESS){
+            if (subtask.get(subTaskId).getStatus() == Status.IN_PROGRESS) {
                 allInProgress++;
-            }else if(subtask.get(subTaskId).getStatus() == Status.DONE){
+            } else if (subtask.get(subTaskId).getStatus() == Status.DONE) {
                 allDone++;
             }
         }
-        if(allDone > 0 && allDone == epic.get(epicId).getSubtaskList().size()){
+        if (allDone > 0 && allDone == epic.get(epicId).getSubtaskList().size()) {
             epic.get(epicId).setStatus(Status.DONE);
-        }else if(allInProgress > 0 || allDone > 0){
+        } else if (allInProgress > 0 || allDone > 0) {
             epic.get(epicId).setStatus(Status.IN_PROGRESS);
-        }else {
+        } else {
             epic.get(epicId).setStatus(Status.NEW);
         }
     }

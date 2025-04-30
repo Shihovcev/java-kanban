@@ -13,9 +13,9 @@ public class Main {
         Task task2 = new Task("Задача 2", "Описание 2");
         Epic epic1 = new Epic("Задача эпика 1", "Описание эпика 1");
         Epic epic2 = new Epic("Задача эпика 2", "Описание эпика 2");
-        Subtask subtask1 = new Subtask("Подзадача 1","Описание подзадачи 1");
-        Subtask subtask2 = new Subtask("Подзадача 2","Описание подзадачи 2");
-        Subtask subtask3 = new Subtask("Подзадача 3","Описание подзадачи 3");
+        Subtask subtask1 = new Subtask("Подзадача 1", "Описание подзадачи 1");
+        Subtask subtask2 = new Subtask("Подзадача 2", "Описание подзадачи 2");
+        Subtask subtask3 = new Subtask("Подзадача 3", "Описание подзадачи 3");
 
         manager.addTask(task1);
         manager.addTask(task2);
@@ -53,7 +53,8 @@ public class Main {
         Epic epicTask = manager.getEpicById(epicTaskID);
         manager.updateEpic(epicTask);
         */
-        manager.updateEpic(manager.getEpicById(manager.getSubtaskById(subtask3.getId()).getEpicTask()));;
+        manager.updateEpic(manager.getEpicById(manager.getSubtaskById(subtask3.getId()).getEpicTask()));
+        ;
 
         System.out.println("Все вызванные задачи");
         System.out.println(manager.getAllTask());
