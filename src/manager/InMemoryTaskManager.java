@@ -44,7 +44,7 @@ public class InMemoryTaskManager implements TaskManager{
         tasks.clear();
     }
 
-    // Final
+
     @Override
     public void deleteAllSubtask(){ // удаление всех подзадач
         for (Subtask subTask : subtask.values()){
