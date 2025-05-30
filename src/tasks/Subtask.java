@@ -1,12 +1,19 @@
 package tasks;
 
 
+import static tasks.TypeTask.SUBTASK;
+
 public class Subtask extends Task {
     private Integer epicId;
 
     public Subtask(String title, String description) {
         super(title, description);
         this.epicId = 0;
+    }
+
+    public Subtask(String title, String description, Status status, Integer id, Integer epicId) {
+        super(title, description, status, id);
+        this.epicId = epicId;
     }
 
     public Subtask(Subtask subtask) {
@@ -27,6 +34,12 @@ public class Subtask extends Task {
         }
         this.epicId = id;
     }
+
+    @Override
+    public TypeTask getType() {
+        return SUBTASK;
+    }
+
 
     @Override
     public String toString() {
