@@ -3,16 +3,16 @@ package manager;
 import tasks.Epic;
 import tasks.Subtask;
 import tasks.Task;
-
 import java.util.ArrayList;
+import java.util.List;
 
 public interface TaskManager {
 
-     ArrayList<Task> getAllTask();// Показать все задачи
+     List<Task> getAllTask();// Показать все задачи
 
-     ArrayList<Task> getAllSubtask();// Показать все подзадачи
+     List<Subtask> getAllSubtask();// Показать все подзадачи
 
-     ArrayList<Task> getAllEpic();// Показать все эпики
+     List<Epic> getAllEpic();// Показать все эпики
 
      void deleteAllTask(); // удаление всех задач
 

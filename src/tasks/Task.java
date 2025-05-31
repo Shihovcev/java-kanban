@@ -2,6 +2,8 @@ package tasks;
 
 import java.util.Objects;
 
+import static tasks.TypeTask.TASK;
+
 public class Task {
     protected Integer id;
     private String title;
@@ -23,7 +25,6 @@ public class Task {
     }
 
     public Task(Task task) {
-        System.out.println(task);
         this.id = task.id;
         this.title = task.title;
         this.description = task.description;
@@ -62,6 +63,9 @@ public class Task {
         this.status = status;
     }
 
+    public TypeTask getType() {
+        return TASK;
+    }
 
     @Override
     public boolean equals(Object o) {
