@@ -1,11 +1,12 @@
 package manager;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import tasks.Task;
-import java.util.*;
 
 public class InMemoryHistoryManager implements HistoryManager {
-    ArrayList<Task> historyArray;
-    private Map<Integer, Node> historyMap;
+    private final Map<Integer, Node> historyMap;
     private Node head;
     private Node tail;
 
@@ -31,7 +32,7 @@ public class InMemoryHistoryManager implements HistoryManager {
     @Override
     public void add(Task task) {
         if (task == null) {
-            return;
+            throw new IllegalArgumentException("Task must not be null.");
         }
 
         Node newNode = new Node(null, new Task(task), null);
@@ -56,7 +57,7 @@ public class InMemoryHistoryManager implements HistoryManager {
     @Override
     public void remove(Integer id) {
         if (id == null) {
-            return;
+            throw new IllegalArgumentException("id must not be null.");
         }
 
         if (!historyMap.containsKey(id)) {

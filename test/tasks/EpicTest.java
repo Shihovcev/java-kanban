@@ -28,8 +28,8 @@ public class EpicTest {
         epicA.addSubtask(subB.getId());
         epicB.addSubtask(subA.getId());
         epicB.addSubtask(subB.getId());
-        subA.setStatus(Status.NEW);
-        subB.setStatus(Status.NEW);
+        subA.setStatus(TaskStatus.NEW);
+        subB.setStatus(TaskStatus.NEW);
     }
 
     @Test
