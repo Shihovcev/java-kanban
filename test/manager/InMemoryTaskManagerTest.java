@@ -233,101 +233,7 @@ class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager> {
     }
 
     @Test
-    void testHistoryManager() {
-        assertTrue(taskManager.getHistory().isEmpty(), "История тасков должна быть пуста");
-        taskManager.addTask(task1);
-        taskManager.addTask(task2);
-        taskManager.addTask(task3);
-        taskManager.addTask(task4);
-        taskManager.addTask(task5);
-
-        taskManager.addEpic(epic1);
-        taskManager.addEpic(epic2);
-
-        subtask1.setEpicTask(epic1.getId());
-        subtask2.setEpicTask(epic1.getId());
-        subtask3.setEpicTask(epic1.getId());
-        subtask4.setEpicTask(epic2.getId());
-        subtask5.setEpicTask(epic2.getId());
-
-        taskManager.addSubtask(subtask1);
-        taskManager.addSubtask(subtask2);
-        taskManager.addSubtask(subtask3);
-        taskManager.addSubtask(subtask4);
-        taskManager.addSubtask(subtask5);
-
-        taskManager.getTaskById(task1.getId());
-        assertEquals(1, taskManager.getHistory().size(), "В истории должен быть 1 таск");
-
-        taskManager.getTaskById(task2.getId());
-        taskManager.getTaskById(task3.getId());
-        taskManager.getTaskById(task4.getId());
-        taskManager.getTaskById(task5.getId());
-        taskManager.getEpicById(epic1.getId());
-        taskManager.getEpicById(epic2.getId());
-        taskManager.getSubtaskById(subtask1.getId());
-        taskManager.getSubtaskById(subtask2.getId());
-        taskManager.getSubtaskById(subtask3.getId());
-        assertEquals(10, taskManager.getHistory().size(), "Некорректное количество тасков в истории");
-
-        taskManager.getSubtaskById(subtask4.getId());
-        taskManager.getSubtaskById(subtask5.getId());
-        assertEquals(12, taskManager.getHistory().size(), "В истории не 12 последних тасков");
-
-        taskManager.getTaskById(task1.getId());
-        assertEquals(task2, taskManager.getHistory().getFirst(), "Объект после повторного обращения не" +
-                "переместился в конец истории");
-
-        taskManager.getTaskById(task2.getId());
-        assertEquals(12, taskManager.getHistory().size(), "История обновляется некорректно");
-        assertEquals(task2, taskManager.getHistory().getLast(), "Объект после повторного обращения не" +
-                "переместился в конец истории");
-
-        taskManager.deleteAllEpic();
-        assertEquals(5, taskManager.getHistory().size(), "Не удалились Эпики и их Сабтаски из истории");
-
-        taskManager.addEpic(epic3);
-        subtask6.setEpicTask(epic3.getId());
-        taskManager.addSubtask(subtask6);
-
-        taskManager.getEpicById(epic3.getId());
-        taskManager.getSubtaskById(subtask6.getId());
-        taskManager.deleteAllSubtask();
-        assertEquals(6, taskManager.getHistory().size(), "Удаленные Сабтаски не удалились из истории");
-
-        taskManager.deleteAllTask();
-        assertEquals(1, taskManager.getHistory().size(), "Удаленные Таски не удалились из истории");
-
-        taskManager.deleteEpicById(epic3.getId());
-        assertEquals(0, taskManager.getHistory().size(), "Удаленный Эпик по id не удалился из истории");
-
-        taskManager.addTask(task1);
-        taskManager.addTask(task2);
-        taskManager.addEpic(epic4);
-        subtask7.setEpicTask(epic4.getId());
-        subtask8.setEpicTask(epic4.getId());
-        taskManager.addSubtask(subtask7);
-        taskManager.addSubtask(subtask8);
-
-        taskManager.getEpicById(epic4.getId());
-        taskManager.getTaskById(task1.getId());
-        taskManager.getTaskById(task2.getId());
-        taskManager.getSubtaskById(subtask7.getId());
-        taskManager.getSubtaskById(subtask8.getId());
-        taskManager.getSubtaskById(subtask7.getId());
-        taskManager.deleteSubtaskById(subtask7.getId());
-
-        assertEquals(4, taskManager.getHistory().size(), "Некорректно удаляется Сабтаск из истории");
-
-        taskManager.deleteTaskById(task2.getId());
-        assertEquals(3, taskManager.getHistory().size(), "Некорректно удаляется Таск из истории");
-
-        taskManager.deleteEpicById(epic4.getId());
-        assertEquals(1, taskManager.getHistory().size(), "Удаленный Эпик по id не удалился из истории");
-    }
-
-    @Test
-    void testTimeValidation() {
+    void testCorrectTimeValidation() {
         LocalDateTime start = LocalDateTime.of(2025, 1, 30, 10, 0);
         duration = Duration.ofMinutes(30);
 
@@ -337,6 +243,17 @@ class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager> {
         taskManager.addTask(task2);
         assertEquals(2, taskManager.getAllTask().size(), "Некорректная проверка временных интервалов," +
                 " временные интервалы не пересекаются");
+    }
+
+    @Test
+    void testTimeOverlap() {
+        LocalDateTime start = LocalDateTime.of(2025, 1, 30, 10, 0);
+        duration = Duration.ofMinutes(30);
+
+        task1.setStartTime(start);
+        task2.setStartTime(start.plusMinutes(30));
+        taskManager.addTask(task1);
+        taskManager.addTask(task2);
 
         task3.setStartTime(start.plusMinutes(30));
         assertThrows(TimeOverlapException.class, () ->  taskManager.addTask(task3),

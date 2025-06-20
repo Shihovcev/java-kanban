@@ -149,7 +149,7 @@ public class InMemoryTaskManager implements TaskManager {
         if (task.getStatus() == null) {
             task.setStatus(NEW);
         }
-        if (!hasTimeOverlap(task)) {
+        if (!checkTimeOverlap(task)) {
             throw new TimeOverlapException("Задача с id: "
                     + task.getId() + " пересекается по времени выполнения с другими задачами.");
         }
@@ -188,7 +188,7 @@ public class InMemoryTaskManager implements TaskManager {
         if (!epics.containsKey(epicId)) {
             throw new IllegalArgumentException("Указанный в Subtask Epic не найден в менеджере.");
         }
-        if (!hasTimeOverlap(subtask)) {
+        if (!checkTimeOverlap(subtask)) {
             throw new TimeOverlapException("Подзадача с id: "
                     + subtask.getId() + " пересекается по времени выполнения с другими задачами.");
         }
@@ -220,7 +220,7 @@ public class InMemoryTaskManager implements TaskManager {
             throw new NoSuchElementException("Обновляемый Task с id: "
                     + task.getId() + " не найден в менеджере.");
         }
-        if (!hasTimeOverlap(task)) {
+        if (!checkTimeOverlap(task)) {
             throw new TimeOverlapException("Обновляемая задача с id: "
                     + task.getId() + " пересекается по времени выполнения с другими задачами.");
         }
@@ -258,7 +258,7 @@ public class InMemoryTaskManager implements TaskManager {
             throw new NoSuchElementException("Обновляемый Subtask с id: "
                     + subtask.getId() + " не найден в менеджере.");
         }
-        if (!hasTimeOverlap(subtask)) {
+        if (!checkTimeOverlap(subtask)) {
             throw new TimeOverlapException("Обновляемый подзадача с id: "
                     + subtask.getId() + " пересекается по времени выполнения с другими задачами.");
         }
@@ -334,6 +334,7 @@ public class InMemoryTaskManager implements TaskManager {
                         new IllegalArgumentException("Обновление статуса Epic невозможно: " +
                                 "Epic не добавлен в менеджер.")
                 );
+                updateEpic = updateEpicTime(updateEpic);
                 epics.put(updateEpic.getId(), updateEpic);
             } else {
                 throw new IllegalStateException("Нарушена целостность данных: "
@@ -379,7 +380,7 @@ public class InMemoryTaskManager implements TaskManager {
         return taskPriorityList.stream().toList();
     }
 
-    protected boolean hasTimeOverlap(Task task) {
+    protected boolean checkTimeOverlap(Task task) {
 
         if (taskPriorityList.isEmpty())
             return true;
@@ -471,6 +472,7 @@ public class InMemoryTaskManager implements TaskManager {
         for (Integer subTaskId : epic.getSubtaskList()) {
             if (subtasks.get(subTaskId).getStatus() == IN_PROGRESS) {
                 allInProgress++;
+                break;
             } else if (subtasks.get(subTaskId).getStatus() == DONE) {
                 allDone++;
             }

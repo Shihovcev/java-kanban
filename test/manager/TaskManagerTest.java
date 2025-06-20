@@ -103,10 +103,8 @@ abstract class TaskManagerTest<T extends TaskManager> {
         taskManager.addTask(task2);
         taskManager.deleteTaskById(task1.getId());
         assertEquals(1, taskManager.getAllTask().size());
-        assertThrows(NoSuchElementException.class, () ->
-                        taskManager.deleteTaskById(task1.getId()),
-                "Попытка удалить задачу которой нет в менеджере " +
-                        "вызывает исключение NoSuchElementException.");
+        assertThrows(NoSuchElementException.class, () -> taskManager.deleteTaskById(task1.getId()),
+                "Попытка удалить задачу которой нет в менеджере вызывает исключение NoSuchElementException.");
         taskManager.deleteTaskById(task2.getId());
         assertTrue(taskManager.getAllTask().isEmpty());
     }
