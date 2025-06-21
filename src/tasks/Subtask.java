@@ -1,7 +1,9 @@
 package tasks;
 
+import static tasks.TaskType.SUBTASK;
 
-import static tasks.TypeTask.SUBTASK;
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 public class Subtask extends Task {
     private Integer epicId;
@@ -11,13 +13,24 @@ public class Subtask extends Task {
         this.epicId = 0;
     }
 
-    public Subtask(String title, String description, Status status, Integer id, Integer epicId) {
-        super(title, description, status, id);
+    public Subtask(Integer id, String title, String description, TaskStatus taskStatus, Integer epicId) {
+        super(id, title, description, taskStatus);
+        this.epicId = epicId;
+    }
+
+    public Subtask(Integer id, String title, String description, TaskStatus taskStatus, Integer epicId,
+                   LocalDateTime startTime, Duration duration) {
+        super(id, title, description, taskStatus, startTime, duration);
         this.epicId = epicId;
     }
 
     public Subtask(Subtask subtask) {
-        super(subtask.getTitle(), subtask.getDescription(), subtask.getStatus(), subtask.getId());
+        super(subtask.getId(),
+                subtask.getTitle(),
+                subtask.getDescription(),
+                subtask.getStatus(),
+                subtask.getStartTime(),
+                subtask.getDuration());
         epicId = subtask.getEpicTask();
     }
 
@@ -29,25 +42,25 @@ public class Subtask extends Task {
         if (id.equals(this.getId())) {
             throw new IllegalArgumentException("Подзадача не может быть своим же эпиком.");
         }
-        if (id.equals(this.getEpicTask())) {
-            return;
-        }
-        this.epicId = id;
+        epicId = id;
     }
 
     @Override
-    public TypeTask getType() {
+    public TaskType getType() {
         return SUBTASK;
     }
-
 
     @Override
     public String toString() {
         return "SubTask{" +
-                "id='" + id +
-                ", title='" + this.getTitle() + '\'' +
-                ", status=" + this.getStatus() +
-                ", Epicid=" + epicId +
+                "Name:" + getTitle() + " \\ " +
+                this.getDescription() +
+                "|ID:" + this.getId() +
+                "|Status:" + this.getStatus() +
+                "|EpicID:" + epicId +
+                "|StartTime:" + this.getStartTime() +
+                "|Duration:" + this.getDuration() +
+                "|EndTime:" + this.getEndTime() +
                 '}';
     }
 }

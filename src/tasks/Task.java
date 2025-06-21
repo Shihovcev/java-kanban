@@ -1,34 +1,82 @@
 package tasks;
 
+import static tasks.TaskStatus.NEW;
+
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
-import static tasks.TypeTask.TASK;
+import static tasks.TaskType.TASK;
 
-public class Task {
+public class Task implements Comparable<Task> {
+
     protected Integer id;
     private String title;
     private String description;
-    private Status status;
+    private TaskStatus taskStatus;
+    private Duration duration;
+    private LocalDateTime startTime;
 
     public Task(String title, String description) {
         id = 0;
         this.title = title;
         this.description = description;
-        status = Status.NEW;
+        taskStatus = NEW;
+        duration = Duration.ZERO;
+        startTime = LocalDateTime.MIN;
     }
 
-    public Task(String title, String description, Status status, Integer id) {
+    public Task(Integer id, String title, String description) {
         this.id = id;
         this.title = title;
         this.description = description;
-        this.status = status;
+        taskStatus = NEW;
+        duration = Duration.ZERO;
+        startTime = LocalDateTime.MIN;
+    }
+
+    public Task(Integer id, String title, String description, TaskStatus taskStatus) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.taskStatus = taskStatus;
+        startTime = LocalDateTime.MIN;
+        duration = Duration.ZERO;
+    }
+
+    public Task(Integer id, String title, String description, TaskStatus taskStatus,
+                LocalDateTime startTime, Duration duration) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.taskStatus = taskStatus;
+        this.startTime = startTime;
+        this.duration = duration;
     }
 
     public Task(Task task) {
         this.id = task.id;
         this.title = task.title;
         this.description = task.description;
-        this.status = task.status;
+        this.taskStatus = task.taskStatus;
+        this.duration = task.duration;
+        this.startTime = task.startTime;
+    }
+
+    public Duration getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Duration duration) {
+        this.duration = duration;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
     }
 
     public String getTitle() {
@@ -55,16 +103,20 @@ public class Task {
         this.description = description;
     }
 
-    public Status getStatus() {
-        return status;
+    public TaskStatus getStatus() {
+        return taskStatus;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
+    public void setStatus(TaskStatus taskStatus) {
+        this.taskStatus = taskStatus;
     }
 
-    public TypeTask getType() {
+    public TaskType getType() {
         return TASK;
+    }
+
+    public LocalDateTime getEndTime() {
+        return startTime.plus(duration);
     }
 
     @Override
@@ -81,11 +133,20 @@ public class Task {
     }
 
     @Override
+    public int compareTo(Task other) {
+        return this.startTime.compareTo(other.startTime);
+    }
+
+    @Override
     public String toString() {
         return "Task{" +
-                "id='" + id +
-                ", title='" + title + '\'' +
-                ", status=" + status +
-                '}';
+                "Name:" + title + " \\ " +
+                description +
+                "|id:" + id +
+                "|Status:" + taskStatus +
+                "|StartTime:" + startTime +
+                "|Duration:" + duration.toMinutes() +
+                "|EndTime:" + getEndTime() +
+                "}";
     }
 }

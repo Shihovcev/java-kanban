@@ -1,6 +1,6 @@
 import manager.*;
 import tasks.Epic;
-import tasks.Status;
+import tasks.TaskStatus;
 import tasks.Subtask;
 import tasks.Task;
 
@@ -42,12 +42,12 @@ public class Main {
         System.out.println(manager.getAllSubtask());
         System.out.println("-----------------------------");
 
-        manager.getTaskById(task1.getId()).setStatus(Status.IN_PROGRESS);
-        manager.getTaskById(task2.getId()).setStatus(Status.IN_PROGRESS);
-        manager.getSubtaskById(subtask1.getId()).setStatus(Status.IN_PROGRESS);
+        manager.getTaskById(task1.getId()).setStatus(TaskStatus.IN_PROGRESS);
+        manager.getTaskById(task2.getId()).setStatus(TaskStatus.IN_PROGRESS);
+        manager.getSubtaskById(subtask1.getId()).setStatus(TaskStatus.IN_PROGRESS);
         manager.updateEpic(manager.getEpicById(manager.getSubtaskById(subtask1.getId()).getEpicTask()));
 
-        manager.getSubtaskById(subtask3.getId()).setStatus(Status.DONE);
+        manager.getSubtaskById(subtask3.getId()).setStatus(TaskStatus.DONE);
         /*
         Integer subTaskID = subtask3.getId();
         Subtask subTask = manager.getSubtaskById(subTaskID);

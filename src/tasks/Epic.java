@@ -1,30 +1,40 @@
 package tasks;
 
+import static tasks.TaskType.EPIC;
+
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import static tasks.TypeTask.EPIC;
-
 public class Epic extends Task {
-    private List<Integer> subtasks;
+    private List<Integer> epicSubtasks = new ArrayList<>();
+    private LocalDateTime endTime;
 
     public Epic(String title, String description) {
         super(title, description);
-        subtasks = new ArrayList<>();
+        endTime = LocalDateTime.MIN;
     }
 
-    public Epic(String title, String description, Status status, Integer id, List<Integer> subtask) {
-        super(title, description, status, id);
-        this.subtasks = subtask;
+    public Epic(Integer id, String title, String description) {
+        super(id, title, description);
+        endTime = LocalDateTime.MIN;
+    }
+
+    public Epic(Integer id, String title, String description, TaskStatus taskStatus,
+                LocalDateTime startTime, Duration duration) {
+        super(id, title, description, taskStatus, startTime, duration);
+        endTime = LocalDateTime.MIN;
     }
 
     public Epic(Epic epic) {
-        super(epic.getTitle(), epic.getDescription(), epic.getStatus(), epic.getId());
-        subtasks = epic.getSubtaskList();
+        super(epic.getId(), epic.getTitle(), epic.getDescription(), epic.getStatus());
+        endTime = epic.getEndTime();
+        epicSubtasks = epic.getSubtaskList();
     }
 
     public List<Integer> getSubtaskList() {
-        return subtasks;
+        return epicSubtasks;
     }
 
     public void addSubtask(Integer id) {
@@ -34,29 +44,39 @@ public class Epic extends Task {
         if (id.equals(this.getId())) {
             throw new IllegalArgumentException("Эпик не может быть своей же подзадачей.");
         }
-        if (subtasks.contains(id)) {
-            return;
-        }
-
-        subtasks.add(id);
+        epicSubtasks.add(id);
     }
 
     public void removeSubtask(Integer id) {
-        subtasks.remove(id);
+        epicSubtasks.remove(id);
     }
 
     @Override
-    public TypeTask getType() {
+    public TaskType getType() {
         return EPIC;
+    }
+
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        if (endTime != null) {
+            this.endTime = endTime;
+        }
     }
 
     @Override
     public String toString() {
         return "Epic{" +
-                "id='" + this.getId() +
-                ", title='" + this.getTitle() + '\'' +
-                ", status=" + this.getStatus() +
-                ", SubTask=" + subtasks +
+                "Name:" + getTitle() + " \\ " +
+                this.getDescription() +
+                "|ID:" + this.getId() +
+                "|Status:" + this.getStatus() +
+                "|SubTask:" + epicSubtasks +
+                "|StartTime:" + this.getStartTime() +
+                "|Duration:" + this.getDuration() +
+                "|EndTime:" + endTime +
                 '}';
     }
 }
