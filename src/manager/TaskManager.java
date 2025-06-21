@@ -34,7 +34,7 @@ public interface TaskManager {
 
      void updateTask(Task task);// Обновление задачи
 
-     void updateEpic(Epic epic);  // обновлние эпика
+     void updateEpic(Epic epic);  // обновление эпика
 
      void updateSubtask(Subtask subtask); // обновление подзадачи
 
@@ -45,4 +45,6 @@ public interface TaskManager {
      void deleteEpicById(Integer id);// удаление эпика по ID
 
      ArrayList<Task> getHistory();
+
+     List<Task> getPrioritizedTasks();
 }
